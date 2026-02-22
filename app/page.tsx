@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 // ── Types ────────────────────────────────────────────────────
 
@@ -14,6 +15,10 @@ interface Personality {
   popCultureQuote: string;
   popCultureSource: string;
   emoji: string;
+  image: string;
+  imageFit: "cover" | "contain";
+  iconBio: string;
+  whyMatch: string;
 }
 
 interface Answer {
@@ -38,6 +43,12 @@ const personalities: Record<PersonalityId, Personality> = {
     popCultureQuote: "Adventure is out there!",
     popCultureSource: "Up (2009)",
     emoji: "🏔️",
+    image: "/icons/up.jpg",
+    imageFit: "cover",
+    iconBio:
+      "Up (2009) is Pixar's beloved adventure film about 78-year-old Carl Fredricksen, who ties thousands of balloons to his house and flies to South America — fulfilling a lifelong dream he shared with his late wife Ellie. It's a story about refusing to let life pass you by, no matter your age.",
+    whyMatch:
+      "Like Carl, you believe it's never too late to chase a dream. You don't wait for the perfect moment — you just go. Your boldness, curiosity, and refusal to play it safe make you a true adventurer at heart. Your coffee order reflects this: whatever's new, rare, or just arrived from somewhere you've never heard of.",
   },
   artist: {
     id: "artist",
@@ -47,6 +58,12 @@ const personalities: Record<PersonalityId, Personality> = {
     popCultureQuote: "I am Groot.",
     popCultureSource: "Guardians of the Galaxy (2014)",
     emoji: "🎨",
+    image: "/icons/groot.png",
+    imageFit: "contain",
+    iconBio:
+      "Groot is a Flora colossus from Planet X and a core member of the Guardians of the Galaxy. Despite speaking only three words, he communicates volumes — through dance, glowing spores, protective vines, and selfless sacrifice. He is proof that the deepest creativity needs no explanation.",
+    whyMatch:
+      "Like Groot, you express yourself in ways that surprise and move people. Your inner world is far richer than most realize, and you don't need to justify your taste — your coffee choice, like your art, speaks for itself. You're drawn to the Honey Process for the same reason: complex, unexpected, and quietly beautiful.",
   },
   intellectual: {
     id: "intellectual",
@@ -56,6 +73,12 @@ const personalities: Record<PersonalityId, Personality> = {
     popCultureQuote: "Elementary, my dear Watson.",
     popCultureSource: "Sherlock Holmes",
     emoji: "📚",
+    image: "/icons/sherlock.jpg",
+    imageFit: "cover",
+    iconBio:
+      "Sherlock Holmes, created by Sir Arthur Conan Doyle in 1887, is literature's greatest detective. Operating from 221B Baker Street, he solves impossible cases through razor-sharp observation, deductive reasoning, and a near-encyclopedic knowledge of chemistry, anatomy, and human behavior. Illustrated here in the iconic 1891 portrait by Sidney Paget.",
+    whyMatch:
+      "Like Holmes, you trust your mind above all else. You notice details others miss, ask questions others don't think to ask, and you're never satisfied with a surface-level answer. You want to know where your coffee was grown, how it was processed, and why it tastes the way it does. Knowledge, for you, is the richest flavor of all.",
   },
   socialite: {
     id: "socialite",
@@ -65,6 +88,12 @@ const personalities: Record<PersonalityId, Personality> = {
     popCultureQuote: "We're all in this together.",
     popCultureSource: "High School Musical (2006)",
     emoji: "🦋",
+    image: "/icons/hsm.jpg",
+    imageFit: "cover",
+    iconBio:
+      "High School Musical (2006) became a cultural phenomenon by celebrating one radical idea: that people are more than the labels put on them. Troy Bolton and Gabriella Montez showed an entire generation that the best things in life — music, friendship, belonging — happen when you break out of your box and show up for each other.",
+    whyMatch:
+      "You're the person who makes everyone feel included. Like the East High Wildcats, you know the best moments happen when people come together. Your coffee order is never just for you — you're always grabbing one for someone else too. The Ethiopian Latte suits you perfectly: warm, inviting, and made to be shared.",
   },
   minimalist: {
     id: "minimalist",
@@ -74,6 +103,12 @@ const personalities: Record<PersonalityId, Personality> = {
     popCultureQuote: "Less is more.",
     popCultureSource: "Ludwig Mies van der Rohe",
     emoji: "🧘",
+    image: "/icons/mies.jpg",
+    imageFit: "cover",
+    iconBio:
+      "Ludwig Mies van der Rohe (1886–1969) was a German-American architect and one of the founding fathers of modern architecture. He coined the phrase 'Less is more' and designed iconic structures like the Barcelona Pavilion and the Seagram Building — stripping architecture down to its purest steel-and-glass essence, and proving that restraint is the highest form of mastery.",
+    whyMatch:
+      "Mies spent his career removing everything unnecessary until only the essential remained — and so do you. You don't need 12 syrups and a caramel drizzle. You need one perfect double shot, made right, in a clean cup. Your clarity of mind, your refusal to overcomplicate, and your appreciation for craft over flash make you a rare and formidable presence.",
   },
 };
 
@@ -297,68 +332,69 @@ export default function CoffeeQuiz() {
       {/* Background floating cups */}
       <BackgroundCups />
 
-      {/* Quiz card */}
+      {/* Quiz / Result card */}
       <div
         className="quiz-card"
         style={{
           position: "relative",
           zIndex: 10,
           width: "100%",
-          maxWidth: "580px",
+          maxWidth: result ? "680px" : "580px",
           padding: "40px",
+          transition: "max-width 0.4s ease",
         }}
       >
         {result ? (
           /* ── Result View ─────────────────────────────── */
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "4rem", marginBottom: "12px" }}>{result.emoji}</div>
+          <div>
+            {/* Top: emoji + name + tagline */}
+            <div style={{ textAlign: "center", marginBottom: "32px" }}>
+              <div style={{ fontSize: "3.5rem", marginBottom: "10px" }}>{result.emoji}</div>
+              <p
+                style={{
+                  fontFamily: "var(--font-lato), sans-serif",
+                  color: "rgba(245,230,211,0.6)",
+                  fontSize: "0.8rem",
+                  letterSpacing: "2px",
+                  textTransform: "uppercase",
+                  marginBottom: "6px",
+                }}
+              >
+                You&apos;re a
+              </p>
+              <h2 className="result-personality" style={{ marginBottom: "6px" }}>
+                {result.name}
+              </h2>
+              <p
+                style={{
+                  fontFamily: "var(--font-lato), sans-serif",
+                  color: "rgba(245,230,211,0.6)",
+                  fontStyle: "italic",
+                  fontSize: "0.95rem",
+                }}
+              >
+                &ldquo;{result.tagline}&rdquo;
+              </p>
+            </div>
 
-            <p
-              style={{
-                fontFamily: "var(--font-lato), sans-serif",
-                color: "rgba(245,230,211,0.6)",
-                fontSize: "0.85rem",
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                marginBottom: "8px",
-              }}
-            >
-              You&apos;re a
-            </p>
-
-            <h2 className="result-personality" style={{ marginBottom: "6px" }}>
-              {result.name}
-            </h2>
-
-            <p
-              style={{
-                fontFamily: "var(--font-lato), sans-serif",
-                color: "rgba(245,230,211,0.65)",
-                fontStyle: "italic",
-                marginBottom: "28px",
-                fontSize: "1rem",
-              }}
-            >
-              &ldquo;{result.tagline}&rdquo;
-            </p>
-
+            {/* Coffee recommendation */}
             <div
               style={{
                 background: "rgba(200,164,110,0.12)",
                 borderRadius: "14px",
-                padding: "20px 24px",
-                marginBottom: "24px",
-                textAlign: "left",
+                padding: "18px 22px",
+                marginBottom: "28px",
+                textAlign: "center",
               }}
             >
               <p
                 style={{
                   fontFamily: "var(--font-lato), sans-serif",
-                  color: "rgba(245,230,211,0.7)",
-                  fontSize: "0.8rem",
+                  color: "rgba(245,230,211,0.6)",
+                  fontSize: "0.75rem",
                   letterSpacing: "1.5px",
                   textTransform: "uppercase",
-                  marginBottom: "8px",
+                  marginBottom: "6px",
                 }}
               >
                 ☕ Your Perfect Cup
@@ -367,7 +403,7 @@ export default function CoffeeQuiz() {
                 style={{
                   fontFamily: "var(--font-playfair), Georgia, serif",
                   color: "#e8c49a",
-                  fontSize: "1.2rem",
+                  fontSize: "1.25rem",
                   fontWeight: 700,
                 }}
               >
@@ -375,26 +411,152 @@ export default function CoffeeQuiz() {
               </p>
             </div>
 
-            <blockquote className="result-quote" style={{ textAlign: "left", marginBottom: "32px" }}>
-              <p style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: "1.05rem", marginBottom: "6px" }}>
-                &ldquo;{result.popCultureQuote}&rdquo;
-              </p>
-              <cite
+            {/* Pop culture section: image + quote + bio + why match */}
+            <div
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "18px",
+                overflow: "hidden",
+                marginBottom: "28px",
+              }}
+            >
+              {/* Image */}
+              <div
                 style={{
-                  fontFamily: "var(--font-lato), sans-serif",
-                  fontSize: "0.8rem",
-                  color: "rgba(245,230,211,0.5)",
-                  fontStyle: "normal",
-                  letterSpacing: "1px",
+                  width: "100%",
+                  height: "260px",
+                  position: "relative",
+                  background: "rgba(0,0,0,0.4)",
                 }}
               >
-                — {result.popCultureSource}
-              </cite>
-            </blockquote>
+                <Image
+                  src={result.image}
+                  alt={result.popCultureSource}
+                  fill
+                  style={{ objectFit: result.imageFit, objectPosition: "top center" }}
+                />
+                {/* Gradient overlay at bottom */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: "80px",
+                    background: "linear-gradient(to top, rgba(20,8,0,0.95), transparent)",
+                  }}
+                />
+                {/* Source label */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "14px",
+                    left: "18px",
+                    fontFamily: "var(--font-lato), sans-serif",
+                    fontSize: "0.75rem",
+                    color: "#c8a46e",
+                    letterSpacing: "1.5px",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {result.popCultureSource}
+                </div>
+              </div>
 
-            <button className="reset-btn" onClick={handleReset}>
-              Take the Quiz Again
-            </button>
+              {/* Text content */}
+              <div style={{ padding: "24px" }}>
+                {/* Quote */}
+                <blockquote className="result-quote" style={{ marginBottom: "20px" }}>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-playfair), Georgia, serif",
+                      fontSize: "1.1rem",
+                      marginBottom: "6px",
+                    }}
+                  >
+                    &ldquo;{result.popCultureQuote}&rdquo;
+                  </p>
+                  <cite
+                    style={{
+                      fontFamily: "var(--font-lato), sans-serif",
+                      fontSize: "0.78rem",
+                      color: "rgba(245,230,211,0.45)",
+                      fontStyle: "normal",
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    — {result.popCultureSource}
+                  </cite>
+                </blockquote>
+
+                {/* Who are they */}
+                <div style={{ marginBottom: "20px" }}>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-lato), sans-serif",
+                      fontSize: "0.7rem",
+                      color: "#c8a46e",
+                      letterSpacing: "2px",
+                      textTransform: "uppercase",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    Who are they?
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-lato), sans-serif",
+                      fontSize: "0.88rem",
+                      color: "rgba(245,230,211,0.75)",
+                      lineHeight: 1.7,
+                    }}
+                  >
+                    {result.iconBio}
+                  </p>
+                </div>
+
+                {/* Why you match */}
+                <div
+                  style={{
+                    background: "rgba(200,164,110,0.08)",
+                    borderRadius: "12px",
+                    padding: "16px 18px",
+                    borderLeft: "3px solid #c8a46e",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "var(--font-lato), sans-serif",
+                      fontSize: "0.7rem",
+                      color: "#c8a46e",
+                      letterSpacing: "2px",
+                      textTransform: "uppercase",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    Why you match
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-lato), sans-serif",
+                      fontSize: "0.88rem",
+                      color: "rgba(245,230,211,0.8)",
+                      lineHeight: 1.7,
+                    }}
+                  >
+                    {result.whyMatch}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Reset button */}
+            <div style={{ textAlign: "center" }}>
+              <button className="reset-btn" onClick={handleReset}>
+                Take the Quiz Again
+              </button>
+            </div>
           </div>
         ) : (
           /* ── Quiz View ───────────────────────────────── */
