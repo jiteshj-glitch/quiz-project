@@ -137,23 +137,7 @@ body {
   transform: translateX(2px) scale(0.99);
 }
 
-/* ── Result Card ──────────────────────────────────────────── */
-
-.result-personality {
-  font-family: var(--font-playfair), Georgia, serif;
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: #e8c49a;
-  line-height: 1.2;
-}
-
-.result-quote {
-  font-style: italic;
-  color: rgba(245, 230, 211, 0.7);
-  border-left: 3px solid #c8a46e;
-  padding-left: 16px;
-  margin: 16px 0;
-}
+/* ── Reset Button ─────────────────────────────────────────── */
 
 .reset-btn {
   background: linear-gradient(135deg, #c8a46e, #a07040);
@@ -172,4 +156,71 @@ body {
 .reset-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(200, 164, 110, 0.4);
+}
+
+/* ── Café Cards ───────────────────────────────────────────── */
+
+.cafe-card {
+  display: block;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cafe-card:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(200, 164, 110, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* ── Personality Animation Keyframes ─────────────────────── */
+
+@keyframes tabSlideIn {
+  from { opacity: 0; transform: translateX(-22px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes bubblePop {
+  0%   { opacity: 0; transform: scale(0); }
+  65%  { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes barExtend {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes rainFall {
+  0%   { opacity: 0;   transform: translateY(-4px); }
+  20%  { opacity: 0.7; }
+  80%  { opacity: 0.4; }
+  100% { opacity: 0;   transform: translateY(22px); }
+}
+
+@keyframes focusPulse {
+  0%, 100% { transform: scale(1);    opacity: 0.75; }
+  50%       { transform: scale(1.2); opacity: 0.25; }
+}
+
+@keyframes shutterFlash {
+  0%, 87%, 100% { opacity: 0; }
+  90%           { opacity: 0.75; }
+}
+
+@keyframes thumbAppear {
+  0%, 84%  { opacity: 0; transform: scale(0.5); }
+  92%      { opacity: 1; transform: scale(1.1); }
+  100%     { opacity: 1; transform: scale(1); }
+}
+
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40%           { transform: translateY(-4px); opacity: 1; }
 }
