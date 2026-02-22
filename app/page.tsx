@@ -144,7 +144,7 @@ const questions: Question[] = [
 
 function LatteCup() {
   return (
-    <svg width="100" height="110" viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="180" height="198" viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="50" cy="22" rx="30" ry="8" fill="#c8a46e" opacity="0.6" />
       <path d="M20 22 Q18 80 25 90 Q50 100 75 90 Q82 80 80 22 Z" fill="#5c3317" />
       <ellipse cx="50" cy="90" rx="25" ry="6" fill="#3d2010" />
@@ -157,7 +157,7 @@ function LatteCup() {
 
 function EspressoCup() {
   return (
-    <svg width="80" height="90" viewBox="0 0 80 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="144" height="162" viewBox="0 0 80 90" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M15 20 Q13 60 18 70 Q40 80 62 70 Q67 60 65 20 Z" fill="#3d2010" />
       <ellipse cx="40" cy="20" rx="25" ry="7" fill="#1a0a00" opacity="0.8" />
       <ellipse cx="40" cy="20" rx="22" ry="5" fill="#c8a46e" opacity="0.5" />
@@ -170,7 +170,7 @@ function EspressoCup() {
 
 function ColdBrewCup() {
   return (
-    <svg width="85" height="120" viewBox="0 0 85 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="153" height="216" viewBox="0 0 85 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="15" y="15" width="55" height="85" rx="8" fill="#2a1008" stroke="#c8a46e" strokeWidth="1.5" opacity="0.9" />
       <rect x="15" y="15" width="55" height="30" rx="8" fill="#1a0a00" opacity="0.8" />
       <ellipse cx="42" cy="15" rx="27" ry="6" fill="#1a0a00" />
@@ -185,7 +185,7 @@ function ColdBrewCup() {
 
 function CappuccinoCup() {
   return (
-    <svg width="100" height="105" viewBox="0 0 100 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="180" height="189" viewBox="0 0 100 105" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M15 25 Q13 75 20 85 Q50 97 80 85 Q87 75 85 25 Z" fill="#5c3317" />
       <ellipse cx="50" cy="25" rx="35" ry="10" fill="#c8a46e" opacity="0.5" />
       <ellipse cx="50" cy="86" rx="30" ry="7" fill="#3d2010" />
@@ -199,7 +199,7 @@ function CappuccinoCup() {
 
 function PourOverCup() {
   return (
-    <svg width="95" height="115" viewBox="0 0 95 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="171" height="207" viewBox="0 0 95 115" fill="none" xmlns="http://www.w3.org/2000/svg">
       <polygon points="47,5 10,45 85,45" fill="#5c3317" opacity="0.9" />
       <rect x="28" y="45" width="40" height="3" rx="1" fill="#c8a46e" opacity="0.6" />
       <path d="M22 50 Q20 90 27 100 Q47 112 68 100 Q75 90 73 50 Z" fill="#3d2010" />
